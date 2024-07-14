@@ -38,6 +38,327 @@
         自己拥有一个导航页把自己的书签放入保存以便自己可以在不同浏览器甚至是不同设备可以使用这些书签是我很久之前的一个愿望本来我只是打算用github.io保存自己的blog，
         而现在刚好在家无聊，便尝试使用github.io写一个纯静态导航页.由于本人html实在是没怎么学，所以基本是借助Kimi写的，本人自己用还是很适合的
         </p>
+        <p>下面是实现效果</p>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航页</title>
+    <style>
+        body {
+
+            background-image: url('1.png');
+            background-size: cover; /* 使背景图像覆盖整个页面 */
+            background-repeat: no-repeat; /* 防止背景图像重复 */
+            background-position: center center; /* 使背景图像居中 */
+        
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 150px;
+            background-color: #333;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            transform: translateX(-250px);
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        .sidebar h2, .sidebar h3 {
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            margin: 10px 0;
+        }
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .main-content {
+            margin-left: 10px;
+            padding: 20px;
+            flex-grow: 1;
+            transition: margin-left 0.3s ease;
+        }
+        .main-content.shrink {
+            margin-left: 250px;
+        }
+        .main-content h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .main-content .search-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .main-content .search-container input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .main-content .search-container select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .main-content .search-container button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .main-content .search-container button:hover {
+            background-color: #0056b3;
+        }
+        .main-content .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .main-content .grid li {
+            margin: 10px 0;
+        }
+        .main-content .grid a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .main-content .grid a:hover {
+            text-decoration: underline;
+        }
+        .foldable-content {
+            display: none;
+        }
+        .toggle-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+           
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-button" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+<h2>   </h2>
+        <h2 onclick="toggleFoldableContent('edge-bookmarks')">Edge 收藏夹</h2>
+        <div class="foldable-content" id="edge-bookmarks">
+            <h3 onclick="showLinks('videos-links')">视频</h3>
+            <ul class="foldable-content" id="videos">
+                <li><a href="javascript:void(0)" onclick="showLinks('videos-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('novels-links')">小说</h3>
+            <ul class="foldable-content" id="novels">
+                <li><a href="javascript:void(0)" onclick="showLinks('novels-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('study-links')">学习</h3>
+            <ul class="foldable-content" id="study">
+                <li><a href="javascript:void(0)" onclick="showLinks('study-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('yichun-links')">宜春学院</h3>
+            <ul class="foldable-content" id="yichun">
+                <li><a href="javascript:void(0)" onclick="showLinks('yichun-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('email-links')">邮箱</h3>
+            <ul class="foldable-content" id="email">
+                <li><a href="javascript:void(0)" onclick="showLinks('email-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('tools-links')">工具</h3>
+            <ul class="foldable-content" id="tools">
+                <li><a href="javascript:void(0)" onclick="showLinks('tools-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('resources-links')">资源站</h3>
+            <ul class="foldable-content" id="resources">
+                <li><a href="javascript:void(0)" onclick="showLinks('resources-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('cloud-links')">网盘</h3>
+            <ul class="foldable-content" id="cloud">
+                <li><a href="javascript:void(0)" onclick="showLinks('cloud-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('shopping-links')">购物</h3>
+            <ul class="foldable-content" id="shopping">
+                <li><a href="javascript:void(0)" onclick="showLinks('shopping-links')">显示链接</a></li>
+            </ul>
+            <h3 onclick="showLinks('other-links')">其他</h3>
+            <ul class="foldable-content" id="other">
+                <li><a href="javascript:void(0)" onclick="showLinks('other-links')">显示链接</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-content" id="main-content">
+        <h1>导航页</h1>
+        <div class="search-container">
+            <input type="text" id="search-query" placeholder="输入搜索内容" onkeydown="if(event.key === 'Enter') performSearch()">
+            <select id="search-engine">
+                <option value="https://www.bing.com/search?q=" selected>必应</option>
+                <option value="https://www.baidu.com/s?wd=">百度</option>
+                <option value="https://www.google.com/search?q=">谷歌</option>
+            </select>
+            <button onclick="performSearch()">搜索</button>
+        </div>
+        <ul class="grid">
+            <li><a href="https://bilibili.com" target="content-frame">bilibili</a></li> 
+            <li><a href="https://github.com/chuanwenbaidi/chuanwenbaidi.github.io/edit/main/index.html" target="content-frame">在线编辑</a></li> 
+            <li><a href="http://m.feijisu34.com/" target="content-frame">飞极速在线</a></li> 
+            <li><a href="https://chuanwenbaidi.github.io/blog/" target="content-frame">博客</a></li> 
+        </ul>
+        <div id="content">
+            <!-- 这里将显示点击的链接 -->
+        </div>
+    </div>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            sidebar.classList.toggle('open');
+            mainContent.classList.toggle('shrink');
+        }
+
+        function performSearch() {
+            const query = document.getElementById('search-query').value;
+            const engine = document.getElementById('search-engine').value;
+            const url = engine + encodeURIComponent(query);
+            window.open(url, '_blank');
+        }
+
+        function toggleFoldableContent(id) {
+                        const content = document.getElementById(id);
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function showLinks(id) {
+            const links = {
+                'videos-links': [
+                    { name: '哔哩哔哩', url: 'https://www.bilibili.com/' },
+                    { name: '腾讯视频', url: 'https://v.qq.com/' },
+                    { name: '樱花动漫网', url: 'https://www.vdm4.com/' },
+                    { name: '飞极速在线', url: 'http://feijisu34.com/' },
+                    { name: 'omofun动漫视频网', url: 'https://omofun.link/' }
+                ],
+                'novels-links': [
+                    { name: '完本神站', url: 'https://www.wanben.org/' },
+                    { name: '铅笔小说', url: 'https://www.23qb.com/' }
+                ],
+                'study-links': [
+                    { name: 'PTA', url: 'https://pintia.cn/problem-sets/dashboard' },
+                    { name: 'CSDN', url: 'https://www.csdn.net/' }
+                ],
+                'yichun-links': [
+                    { name: '宜春学院', url: 'https://www.jxycu.edu.cn/' },
+                    { name: '个人空间', url: 'https://i.chaoxing.com/base?vflag=true&fid=868&backUrl=http://v2.chaoxing.com' }
+                ],
+                'email-links': [
+                    { name: 'QQ邮箱', url: 'https://mail.qq.com/cgi-bin/frame_html?sid=Zov3z0rQBRBLvBdy&r=40219d2f36aadf8ca32f3f274e6dad1e&lang=zh' }
+                ],
+                'tools-links': [
+                    { name: 'DisplaySpecifications', url: 'https://www.displayspecifications.com/en' },
+                    { name: '文心一言', url: 'https://yiyan.baidu.com/welcome' },
+                    { name: '讯飞星火大模型', url: 'https://xinghuo.xfyun.cn/%EF%BC%89' },
+                    { name: 'GitHub - lazydog28/mc_auto_boss', url: 'https://github.com/lazydog28/mc_auto_boss' },
+                    { name: 'mc_auto_boss/常见问题.md', url: 'https://github.com/lazydog28/mc_auto_boss/blob/master/%E5%B8%B8%E8%B7%81%E9%97%AE%E9%A2%98.md' },
+                    { name: 'Xiaomi Tools', url: 'https://xiaomitools.com/main-page-cn/' },
+                    { name: 'HelloGitHub', url: 'https://hellogithub.com/' }
+                ],
+                'resources-links': [
+                    { name: '乐游哆', url: 'https://www.1090wyx.top/' },
+                    { name: 'Galgame世界', url: 'https://acgngames.net/' },
+                    { name: '模之屋', url: 'https://www.aplaybox.com/' },
+                    { name: '莉莉云', url: 'https://cloud.lilywhite.cc/front' },
+                    { name: '植物僵尸相关下载', url: 'http://jspvz.com/download.htm' },
+                    { name: 'XiaomiROM.com', url: 'https://xiaomirom.com/' },
+                    { name: 'CMDW-游戏仓库', url: 'https://www.cmdw.vip/products' },
+                    { name: 'TouchGAL', url: 'https://www.touchgal.me/' },
+                    { name: '乐游哆-第109页', url: 'https://www.1090wyx.top/game/page/109' }
+                ],
+                'cloud-links': [
+                    { name: '蓝奏云', url: 'https://pc.woozooo.com/mydisk.php' },
+                    { name: '百度网盘', url: 'http://pan.baidu.com/disk/main#/index?category=all' }
+                ],
+                'shopping-links': [
+                    { name: '淘宝网', url: 'https://www.taobao.com/?spm=a2e0b.20350158.1581860521.1.3903468aUmk8b1&pid=mm_15891853_2192459_8654707&union_lens=recoveryid%3A201_11.92.48.12_43625698_1638511743051%3Bprepvid%3A201_11.92.48.12_43625698_1638511743051&clk1=e7fe3251205782fcfb4bec9676138968' }
+                ],
+                'other-links': [
+                    { name: '百度', url: 'https://www.baidu.com/' },
+                    { name: 'CSDN', url: 'https://www.csdn.net/' },
+                    { name: '哔哩哔哩', url: 'https://www.bilibili.com/' },
+                    { name: 'GitHub', url: 'https://github.com/' },
+                    { name: '首页', url: 'http://10.0.10.10/' },
+                    { name: 'Kimi.ai', url: 'https://kimi.moonshot.cn/' },
+                    { name: 'github.io', url: 'https://chuanwenbaidi.github.io/' },
+                    { name: 'chuanwenbaidi-blog', url: 'https://chuanwenbaidi.github.io/blog/' },
+                    { name: 'Sunshine 文档', url: 'https://docs.lizardbyte.dev/projects/sunshine/en/latest/about/installation.html' },
+                    { name: '次元城·CYCITY', url: 'https://www.cycity.pro/' },
+                    { name: '课表', url: 'https://kb.chaoxing.com/res/app/curriculum/schedule.html?curriculumUuid=3a96ab9d-b917-4321-b15a-e936ac01d91f' },
+                    { name: '曲奇动漫', url: 'https://m.quqim.net/' },
+                    { name: '新建标签页', url: 'https://palworld.caimogu.cc/breed.html' },
+                    { name: '一网一匠极速版', url: 'https://ywyj.cn/' },
+                    { name: 'ACG盒子', url: 'https://www.acgbox.link/' },
+                    { name: 'Galgamer', url: 'https://galgamer.moe/' },
+                    { name: '小米澎湃OS', url: 'https://hyperos.fans/zh/' },
+                    { name: '下载Google Chrome', url: 'https://chrome.cn.uptodown.com/android/download' },
+                    { name: '哔哩哔哩视频', url: 'https://www.bilibili.com/video/BV1et411b73Z?p=187&vd_source=7bf1b7b264f95fd48215e61d90f64704' }
+                ]
+            };
+
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+            links[id].forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.target = '_blank';
+                a.textContent = link.name;
+                content.appendChild(a);
+                content.appendChild(document.createElement('br'));
+            });
+        }
+
+        // 初始化时隐藏内容
+        document.addEventListener('DOMContentLoaded', () => {
+            const foldableContents = document.querySelectorAll('.foldable-content');
+            foldableContents.forEach(content => content.style.display = 'none');
+        });
+
+    </script>
+
+</body>
+</html>
         <a href="index.html">返回首页</a>
     </div>
 </body>
