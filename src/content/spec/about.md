@@ -1,9 +1,14 @@
-# About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+# 关于
 
-::github{repo="saicaca/fuwari"}
+你好，我是**久梦**，欢迎来到我的博客。
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+这里记录我的技术笔记、项目经验与生活随想。
+
+## 关于本站
+
+- 本站基于开源博客框架 [Fuwari](https://github.com/saicaca/fuwari) 搭建
+- 文章除特别声明外，均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 协议授权，转载请注明出处
+
+## 联系我
+
+- GitHub：[jiumengbuxing](https://github.com/jiumengbuxing)
