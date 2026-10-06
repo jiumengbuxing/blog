@@ -51,7 +51,8 @@ function watchContentAssets() {
 // https://astro.build/config
 export default defineConfig({
 	site: "https://jiumengbuxing.github.io",
-	base: "/blog",
+	// 本地 dev server 用 /，GitHub Pages 构建时用 /blog
+	base: process.env.NODE_ENV === "development" ? "/" : "/blog",
 	trailingSlash: "always",
 	integrations: [
 		tailwind({
