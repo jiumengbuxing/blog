@@ -46,8 +46,8 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.About,
 		{
 			name: "GitHub",
-			url: "https://github.com/jiumengbuxing", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
+			url: "https://github.com/jiumengbuxing",
+			external: true,
 		},
 	],
 };
@@ -55,7 +55,7 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
 	avatar: "/20261007-041742_135546662_e8eee2.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "久梦",
-	bio: "记录技术与生活。",
+	bio: "记录技术与生活",
 	links: [
 		{
 			name: "GitHub",
@@ -66,7 +66,7 @@ export const profileConfig: ProfileConfig = {
 };
 
 export const licenseConfig: LicenseConfig = {
-	enable: true,
+	enable: false,
 	name: "CC BY-NC-SA 4.0",
 	url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
 };
