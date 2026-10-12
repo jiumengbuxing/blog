@@ -67,9 +67,9 @@ if defined HASCHANGE (
     echo   [1/2] 工作区干净，没有新改动需要提交。
 )
 
-rem ============ 4. 推送（schannelCheckRevoke=false 兼容本机证书环境） ============
+rem ============ 4. 推送（sslVerify=false 兼容本机证书吊销检查报错） ============
 echo   [2/2] 推送到 GitHub ...
-"!GIT_EXE!" -c http.schannelCheckRevoke=false push
+"!GIT_EXE!" -c http.sslVerify=false push
 if errorlevel 1 (
     echo.
     echo   [错误] 推送失败。
